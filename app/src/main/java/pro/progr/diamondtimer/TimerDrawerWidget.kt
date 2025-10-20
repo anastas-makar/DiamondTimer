@@ -35,9 +35,7 @@ fun TimerDrawerWidget(diamondsTotal: State<Int>,
 
         Column(modifier = Modifier.align(Alignment.CenterHorizontally))  {
             Text(text = "Открыть таймер", modifier = Modifier.align(Alignment.CenterHorizontally))
-            Row(modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally)) {
-                Text(text = "с ${diamondsTotal.value}")
-            }
+            Text(text = "с наградами")
         }
 
     }
