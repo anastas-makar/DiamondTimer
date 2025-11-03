@@ -56,7 +56,7 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.5.4")
     implementation("androidx.activity:activity-compose:1.9.2")
 
-    implementation("pro.progr:diamond-api:1.0.0-alpha")
+    implementation("pro.progr:diamond-api:1.0.1-alpha")
 }
 
 afterEvaluate {
