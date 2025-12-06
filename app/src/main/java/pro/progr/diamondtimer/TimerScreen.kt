@@ -206,8 +206,8 @@ fun TimerScreen(
                             if (ui.isClaiming) CircularProgressIndicator(Modifier.size(18.dp))
                             Text("Забрать и перезапустить")
                         }
-                        OutlinedButton(onClick = onReset, enabled = !ui.isClaiming) { Text("Сброс") }
                     }
+                    OutlinedButton(onClick = onReset, enabled = !ui.isClaiming) { Text("Не забирать и сбросить таймер") }
                 }
 
                 ui.lastError?.let {
