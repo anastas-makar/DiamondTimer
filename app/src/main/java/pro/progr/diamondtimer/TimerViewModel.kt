@@ -113,6 +113,21 @@ class TimerViewModel(
         start()
     }
 
+    fun flush() {
+        // сброс
+        _state.update {
+            it.copy(
+                remainingMs = it.totalMs,
+                isRunning = false,
+                isPaused = false,
+                isFinished = false,
+                canClaim = true,
+                isClaiming = false,
+                lastError = null
+            )
+        }
+    }
+
     fun claim(onSuccess: (() -> Unit)? = null) {
         val s = _state.value
         if (!s.canClaim || s.isClaiming) return
@@ -140,6 +155,10 @@ class TimerViewModel(
 
     fun claimAndRestart() {
         claim { restart() }
+    }
+
+    fun claimAndFlush() {
+        claim { flush() }
     }
 
     private fun launchTicker(resume: Boolean) {
