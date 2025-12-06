@@ -1,5 +1,10 @@
 package pro.progr.diamondtimer
 
+import android.content.Context
+import android.media.RingtoneManager
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -29,10 +34,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
@@ -63,6 +73,27 @@ fun TimerScreen(
 ) {
     val ui by state.collectAsState()
     val diamonds by diamondsCount.collectAsState()
+
+    val context = LocalContext.current
+
+    // Чтобы не звенеть каждый раз при любой перерисовке, а только в момент перехода в isFinished = true
+    var wasFinished by remember { mutableStateOf(false) }
+
+    LaunchedEffect(ui.isFinished) {
+        if (ui.isFinished && !wasFinished) {
+            wasFinished = true
+
+            // Вибрация
+            vibrateOnce(context)
+
+            // Звук (можешь закомментировать, если не нужен)
+            playNotificationSound(context)
+        }
+        if (!ui.isFinished) {
+            // как только выходим из состояния "финиш", разрешаем следующую сработку
+            wasFinished = false
+        }
+    }
 
     val progress =
         if (ui.totalMs == 0L) 0f
@@ -218,5 +249,31 @@ fun TimerScreen(
                 }
             }
         }
+    }
+}
+
+private fun vibrateOnce(context: Context) {
+    val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator ?: return
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        vibrator.vibrate(
+            VibrationEffect.createOneShot(
+                /* milliseconds = */ 400L,
+                /* amplitude   = */ VibrationEffect.DEFAULT_AMPLITUDE
+            )
+        )
+    } else {
+        @Suppress("DEPRECATION")
+        vibrator.vibrate(400L)
+    }
+}
+
+private fun playNotificationSound(context: Context) {
+    try {
+        val notificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val ringtone = RingtoneManager.getRingtone(context, notificationUri)
+        ringtone?.play()
+    } catch (_: Throwable) {
+        // тихо игнорируем, если что-то пошло не так
     }
 }
