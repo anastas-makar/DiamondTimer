@@ -1,5 +1,6 @@
 package pro.progr.diamondtimer
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +25,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.Icon
 import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -97,10 +97,12 @@ fun TimerScreen(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colors.primary.copy(alpha = 0.25f),
-                shape = RoundedCornerShape(2.dp))) {
+                shape = RoundedCornerShape(4.dp))
+            .background(MaterialTheme.colors.primary.copy(alpha = 0.1f))
+        ) {
             Text("Бриллианты:  $diamonds", fontWeight = FontWeight.SemiBold,
                 modifier = Modifier
-                    .padding(4.dp))
+                    .padding(5.dp))
         }
 
         // Выбор длительности
