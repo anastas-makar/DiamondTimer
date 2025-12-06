@@ -52,6 +52,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.10.0")
     implementation("androidx.compose.foundation:foundation:1.10.0")
     implementation("androidx.activity:activity-compose:1.12.1")
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
     implementation("pro.progr:diamond-api:1.0.1-alpha")
 }
