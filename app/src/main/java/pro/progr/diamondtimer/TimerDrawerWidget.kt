@@ -31,7 +31,10 @@ fun TimerDrawerWidget(navFun : () -> Unit) {
                 .align(Alignment.CenterHorizontally)
         )
 
-        Text(text = "Открыть таймер с наградами", modifier = Modifier.padding(5.dp))
+        Column(modifier = Modifier.padding(5.dp))  {
+            Text(text = "Открыть таймер", modifier = Modifier.align(Alignment.CenterHorizontally))
+            Text(text = "с наградами")
+        }
 
     }
 }
