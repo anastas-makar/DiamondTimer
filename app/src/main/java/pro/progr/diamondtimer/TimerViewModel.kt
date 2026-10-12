@@ -146,7 +146,7 @@ class TimerViewModel(
                 _state.update {
                     it.copy(
                         isClaiming = false,
-                        lastError = "Не удалось выдать награду"
+                        lastError = TimerUiError.RewardFailed
                     )
                 }
             }

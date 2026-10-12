@@ -44,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.buildAnnotatedString
@@ -75,6 +76,8 @@ fun TimerContent(
     val diamonds by diamondsCount.collectAsState()
 
     val context = LocalContext.current
+    val diamondsContentDescription = stringResource(R.string.diamonds_content_description)
+    val claimRewardLabel = stringResource(R.string.claim_reward, ui.selectedReward)
 
     // Чтобы не звенеть каждый раз при любой перерисовке, а только в момент перехода в isFinished = true
     var wasFinished by remember { mutableStateOf(false) }
@@ -111,7 +114,7 @@ fun TimerContent(
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_diamond),
-                contentDescription = "бриллианты"
+                contentDescription = diamondsContentDescription
             )
         }
     )
@@ -131,13 +134,13 @@ fun TimerContent(
                 shape = RoundedCornerShape(4.dp))
             .background(MaterialTheme.colors.primary.copy(alpha = 0.1f))
         ) {
-            Text("Бриллианты:  $diamonds", fontWeight = FontWeight.SemiBold,
+            Text(stringResource(R.string.diamonds_balance, diamonds), fontWeight = FontWeight.SemiBold,
                 modifier = Modifier
                     .padding(5.dp))
         }
 
         // Выбор длительности
-        Text("Длительность", fontWeight = FontWeight.SemiBold)
+        Text(stringResource(R.string.duration), fontWeight = FontWeight.SemiBold)
 
         FlowRow (modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -145,7 +148,7 @@ fun TimerContent(
                 FilterChip(
                     selected = ui.totalMs == m.minutesMs && !ui.isRunning && !ui.isPaused,
                     onClick = { if (!ui.isRunning && !ui.isPaused) onChangeDurationMinutes(m) },
-                    content = { Text("$m мин") },
+                    content = { Text(stringResource(R.string.duration_minutes, m)) },
                     enabled = !ui.isRunning && !ui.isPaused,
                     colors = ChipDefaults.filterChipColors(
                         selectedBackgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.25f),
@@ -156,7 +159,7 @@ fun TimerContent(
         }
 
         // Выбор награды
-        Text("Награда", fontWeight = FontWeight.SemiBold)
+        Text(stringResource(R.string.reward), fontWeight = FontWeight.SemiBold)
 
         FlowRow (modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -206,28 +209,29 @@ fun TimerContent(
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         when {
                             !ui.isRunning && !ui.isPaused -> {
-                                Button(onClick = onStart) { Text("Старт") }
-                                OutlinedButton(onClick = onReset, enabled = ui.remainingMs != ui.totalMs) { Text("Сброс") }
+                                Button(onClick = onStart) { Text(stringResource(R.string.start)) }
+                                OutlinedButton(onClick = onReset, enabled = ui.remainingMs != ui.totalMs) { Text(stringResource(R.string.reset)) }
                             }
                             ui.isRunning -> {
-                                Button(onClick = onPause) { Text("Пауза") }
-                                OutlinedButton(onClick = onReset) { Text("Сброс") }
+                                Button(onClick = onPause) { Text(stringResource(R.string.pause)) }
+                                OutlinedButton(onClick = onReset) { Text(stringResource(R.string.reset)) }
                             }
                             ui.isPaused -> {
-                                Button(onClick = onResume) { Text("Продолжить") }
-                                OutlinedButton(onClick = onReset) { Text("Сброс") }
+                                Button(onClick = onResume) { Text(stringResource(R.string.resume)) }
+                                OutlinedButton(onClick = onReset) { Text(stringResource(R.string.reset)) }
                             }
                         }
                     }
                 } else {
                     // Экран финиша
-                    Text("Время вышло")
+                    Text(stringResource(R.string.time_up))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Button(onClick = onClaim, enabled = ui.canClaim && !ui.isClaiming) {
                             if (ui.isClaiming) CircularProgressIndicator(Modifier.size(18.dp))
                             Text(
                                 text = buildAnnotatedString {
-                                    append("Забрать ${ui.selectedReward} ")
+                                    append(claimRewardLabel)
+                                    append(" ")
                                     appendInlineContent(diamondInlineId)
                                 },
                                 inlineContent = inlineContent
@@ -235,15 +239,17 @@ fun TimerContent(
                         }
                         Button(onClick = onClaimAndRestart, enabled = ui.canClaim && !ui.isClaiming) {
                             if (ui.isClaiming) CircularProgressIndicator(Modifier.size(18.dp))
-                            Text("Забрать и перезапустить")
+                            Text(stringResource(R.string.claim_and_restart))
                         }
                     }
-                    OutlinedButton(onClick = onReset, enabled = !ui.isClaiming) { Text("Не забирать и сбросить таймер") }
+                    OutlinedButton(onClick = onReset, enabled = !ui.isClaiming) { Text(stringResource(R.string.discard_and_reset)) }
                 }
 
-                ui.lastError?.let {
+                ui.lastError?.let { error ->
                     Text(
-                        text = it,
+                        text = when (error) {
+                            TimerUiError.RewardFailed -> stringResource(R.string.reward_failed)
+                        },
                         color = MaterialTheme.colors.error
                     )
                 }

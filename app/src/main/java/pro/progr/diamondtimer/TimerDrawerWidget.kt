@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -24,16 +26,19 @@ fun TimerDrawerWidget(navFun : () -> Unit) {
 
         Image(
             painter = painterResource(id = R.drawable.timer),
-            contentDescription = "Таймер",
+            contentDescription = stringResource(R.string.timer_image_description),
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
         )
 
-        Column(modifier = Modifier.padding(5.dp))  {
-            Text(text = "Открыть таймер", modifier = Modifier.align(Alignment.CenterHorizontally))
-            Text(text = "с наградами")
+        Column(modifier = Modifier.padding(5.dp)) {
+            Text(
+                text = stringResource(R.string.open_timer_with_rewards),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
         }
 
     }

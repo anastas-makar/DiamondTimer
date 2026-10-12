@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">DiamondTimer</string>
+    <string name="app_name">Timer with rewards</string>
+    <string name="timer_title">Timer with rewards</string>
+    <string name="back">Back</string>
+    <string name="timer_image_description">Timer</string>
+    <string name="open_timer_with_rewards">Open timer with rewards</string>
+    <string name="diamonds_balance">Diamonds: %1$d</string>
+    <string name="diamonds_content_description">Diamonds</string>
+    <string name="duration">Duration</string>
+    <string name="duration_minutes">%1$d min</string>
+    <string name="reward">Reward</string>
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="time_up">Time is up</string>
+    <string name="claim_reward">Claim %1$d</string>
+    <string name="claim_and_restart">Claim and restart</string>
+    <string name="discard_and_reset">Don’t claim and reset the timer</string>
+    <string name="reward_failed">Failed to grant the reward</string>
 </resources>

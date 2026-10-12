@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Таймер с наградами</string>
+    <string name="timer_title">Таймер с наградами</string>
+    <string name="back">Назад</string>
+    <string name="timer_image_description">Таймер</string>
+    <string name="open_timer_with_rewards">Открыть таймер с наградами</string>
+    <string name="diamonds_balance">Бриллианты: %1$d</string>
+    <string name="diamonds_content_description">Бриллианты</string>
+    <string name="duration">Длительность</string>
+    <string name="duration_minutes">%1$d мин</string>
+    <string name="reward">Награда</string>
+    <string name="start">Старт</string>
+    <string name="reset">Сброс</string>
+    <string name="pause">Пауза</string>
+    <string name="resume">Продолжить</string>
+    <string name="time_up">Время вышло</string>
+    <string name="claim_reward">Забрать %1$d</string>
+    <string name="claim_and_restart">Забрать и перезапустить</string>
+    <string name="discard_and_reset">Не забирать и сбросить таймер</string>
+    <string name="reward_failed">Не удалось выдать награду</string>
+</resources>
